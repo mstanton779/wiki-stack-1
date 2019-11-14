@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const sequelize = require('sequelize')
-const layout = require('./views/layout')
+const {layout, main} = require('./views/')
 const { db } = require('./models')
 const wikiRouter = require('./routes/wiki')
 const userRouter = require('./routes/user')
@@ -28,4 +28,9 @@ const init = async () => {
         console.log('listening')
     })
 }
+
+app.get('/', (req, res, next) => {
+    res.send(main())
+})
+
 init()
