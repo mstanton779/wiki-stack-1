@@ -42,5 +42,11 @@ const User = db.define('users', {
         },
     },
 })
-
+Page.addHook('beforeValidate', page => {
+    page.slug = page.title
+        .split(' ')
+        .join('_')
+        .replace(/\s+/g, '_')
+        .replace(/\W/g, '')
+})
 module.exports = { db, Page, User }
