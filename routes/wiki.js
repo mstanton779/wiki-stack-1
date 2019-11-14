@@ -33,11 +33,31 @@ router.post('/', async (req, res, next) => {
         pageStatus = 'closed'
     }
     try {
+        // const maybeNewAuthor = req.body.name; 
+        // const alreadyThere = await User.findOne({ where: { name: maybeNewAuthor } }); 
+        // //console.log('isNew returns: ', alreadyThere, 'truthiness', (alreadyThere == true)); 
+        
+        // if (!alreadyThere) {
+        //     const newUser = await User.create({
+        //         name: req.body.name,
+        //         email: req.body.email
+        //     })
+        // }
+
+        const [user, wasCreated] = await User.findOrCreate({
+            where: {
+                name: req.body.name, 
+                email: req.body.email
+            }
+        })
+
         const newPost = await Page.create({
             title: req.body.title,
             content: req.body.content,
             status: pageStatus,
         })
+
+        newPost.setAuthor(user); 
 
         res.redirect(`/wiki/${newPost.slug}`)
     } catch (err) {

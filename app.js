@@ -3,9 +3,10 @@ const app = express()
 const morgan = require('morgan')
 const sequelize = require('sequelize')
 const { layout, main } = require('./views/')
-const { db } = require('./models')
+const { db, Page } = require('./models')
 const wikiRouter = require('./routes/wiki')
 const userRouter = require('./routes/user')
+
 // console.log(db)
 db.authenticate().then(() => {
     console.log('connected to the database')
@@ -29,8 +30,10 @@ const init = async () => {
     })
 }
 
-app.get('/', (req, res, next) => {
-    res.send(main())
+app.get('/', async (req, res, next) => {
+    const allPosts = await Page.findAll(); 
+    console.log('allPosts', allPosts); 
+    res.send(main(allPosts)); 
 })
 
 init()

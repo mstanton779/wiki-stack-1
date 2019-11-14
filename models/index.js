@@ -49,4 +49,8 @@ Page.addHook('beforeValidate', page => {
         .replace(/\s+/g, '_')
         .replace(/\W/g, '')
 })
+
+Page.belongsTo(User, {as : 'author'});
+//User.hasMany(Page); 
+
 module.exports = { db, Page, User }
