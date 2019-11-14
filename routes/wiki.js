@@ -39,7 +39,7 @@ router.post('/', async (req, res, next) => {
             status: pageStatus,
         })
 
-        res.redirect('/')
+        res.redirect(`/wiki/${newPost.slug}`)
     } catch (err) {
         next(err)
     }
@@ -48,7 +48,7 @@ router.post('/', async (req, res, next) => {
 router.get('/:slug', async (req, res, next) => {
     const slug = req.params.slug
     console.log('slug', typeof slug)
-    const page = await Page.findOne({ where: { slug: 'qewiurhqwerj' } })
+    const page = await Page.findOne({ where: { slug: slug } })
     console.log('page', page)
     const author = 'Nicky'
     res.send(wikiPage(page, author))
