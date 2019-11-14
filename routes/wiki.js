@@ -33,10 +33,10 @@ router.post('/', async (req, res, next) => {
         pageStatus = 'closed'
     }
     try {
-        // const maybeNewAuthor = req.body.name; 
-        // const alreadyThere = await User.findOne({ where: { name: maybeNewAuthor } }); 
-        // //console.log('isNew returns: ', alreadyThere, 'truthiness', (alreadyThere == true)); 
-        
+        // const maybeNewAuthor = req.body.name;
+        // const alreadyThere = await User.findOne({ where: { name: maybeNewAuthor } });
+        // //console.log('isNew returns: ', alreadyThere, 'truthiness', (alreadyThere == true));
+
         // if (!alreadyThere) {
         //     const newUser = await User.create({
         //         name: req.body.name,
@@ -46,9 +46,9 @@ router.post('/', async (req, res, next) => {
 
         const [user, wasCreated] = await User.findOrCreate({
             where: {
-                name: req.body.name, 
-                email: req.body.email
-            }
+                name: req.body.name,
+                email: req.body.email,
+            },
         })
 
         const newPost = await Page.create({
@@ -57,7 +57,7 @@ router.post('/', async (req, res, next) => {
             status: pageStatus,
         })
 
-        newPost.setAuthor(user); 
+        newPost.setAuthor(user)
 
         res.redirect(`/wiki/${newPost.slug}`)
     } catch (err) {
@@ -67,9 +67,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/:slug', async (req, res, next) => {
     const slug = req.params.slug
-    console.log('slug', typeof slug)
     const page = await Page.findOne({ where: { slug: slug } })
-    console.log('page', page)
-    const author = 'Nicky'
+    const author = await page.getAuthor()
     res.send(wikiPage(page, author))
 })

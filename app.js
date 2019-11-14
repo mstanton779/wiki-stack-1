@@ -31,9 +31,9 @@ const init = async () => {
 }
 
 app.get('/', async (req, res, next) => {
-    const allPosts = await Page.findAll(); 
-    console.log('allPosts', allPosts); 
-    res.send(main(allPosts)); 
+    const allPosts = await Page.findAll()
+    console.log('allPosts', allPosts)
+    res.send(main(allPosts))
 })
 
 init()

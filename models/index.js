@@ -50,7 +50,7 @@ Page.addHook('beforeValidate', page => {
         .replace(/\W/g, '')
 })
 
-Page.belongsTo(User, {as : 'author'});
-//User.hasMany(Page); 
+Page.belongsTo(User, { as: 'author' })
+//User.hasMany(Page);
 
 module.exports = { db, Page, User }
